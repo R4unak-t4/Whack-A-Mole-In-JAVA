@@ -24,6 +24,6 @@ public class WhackAMole {
         frame.setLayout(new BorderLayout()); // For Layout management
 
         textLable.setFont(new Font("Arial", Font.PLAIN, 50));
-        textLable.setHorizontalAlignment( );
+        textLable.setHorizontalAlignment();
     }
 }
