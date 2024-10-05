@@ -19,6 +19,13 @@ public class WhackAMole {
     ImageIcon mole;
     ImageIcon piranha;
 
+    JButton currMolePos;
+    JButton currPiranhaPos;
+
+    Random random = new Random();
+    Timer setM0leTimer;
+    Timer setPiranhaTimer;
+
     //Constructor for calling
     WhackAMole() {
 
@@ -63,6 +70,43 @@ public class WhackAMole {
             tile.setIcon(mole);
         }
 
-        frame.setVisible(true); //To ensure all the componenets are loaded first before making the game visible
+        setM0leTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currMolePos != null){
+                    currMolePos.setIcon(null);
+                    currMolePos = null;
+                }
+                int num = random.nextInt(9);
+                JButton pos = board[num];
+
+                currMolePos =pos;
+                currMolePos.setIcon(mole);
+
+            }
+        });
+        setPiranhaTimer = new Timer(1500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currPiranhaPos != null){
+                    currPiranhaPos.setIcon(null);
+                    currPiranhaPos = null;
+                }
+                int num = random.nextInt(9);
+                JButton pos = board[num];
+
+                currPiranhaPos =pos;
+                currPiranhaPos.setIcon(piranha);
+
+            }
+        });
+
+
+    setPiranhaTimer.start();
+    setM0leTimer.start();
+        frame.setVisible(true); //To ensure all the components are loaded first before making the game visible
+
+
     }
+
 }
