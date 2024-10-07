@@ -25,6 +25,7 @@ public class WhackAMole {
     Random random = new Random();
     Timer setM0leTimer;
     Timer setPiranhaTimer;
+    int Score =0;
 
     //Constructor for calling
     WhackAMole() {
@@ -67,7 +68,23 @@ public class WhackAMole {
             board[i] = tile;
             BoardPanel.add(tile);
             tile.setFocusable(false); //To remove the rectangles surrounding the img when clicked
-            tile.setIcon(mole);
+            tile.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JButton tile = (JButton)e.getSource();
+                    if (tile == currMolePos){
+                        Score += 10;
+                        textLable.setText("Score: "+ Integer.toString(Score));
+                    } else if (tile == currPiranhaPos) {
+                        textLable.setText("Game Over"+Integer.toString(Score));
+                        setM0leTimer.stop();
+                        setPiranhaTimer.stop();
+                        for (int i = 0; i <9;i++){
+                            board[i].setEnabled(false);
+                        }
+                    }
+                }
+            });
         }
 
         setM0leTimer = new Timer(1000, new ActionListener() {
@@ -79,6 +96,11 @@ public class WhackAMole {
                 }
                 int num = random.nextInt(9);
                 JButton pos = board[num];
+
+//                Check if already occupied
+                if(currPiranhaPos == pos){
+                    return;
+                }
 
                 currMolePos =pos;
                 currMolePos.setIcon(mole);
@@ -95,6 +117,10 @@ public class WhackAMole {
                 int num = random.nextInt(9);
                 JButton pos = board[num];
 
+                if (currMolePos == pos){
+                    return;
+                }
+
                 currPiranhaPos =pos;
                 currPiranhaPos.setIcon(piranha);
 
@@ -104,7 +130,7 @@ public class WhackAMole {
 
     setPiranhaTimer.start();
     setM0leTimer.start();
-        frame.setVisible(true); //To ensure all the components are loaded first before making the game visible
+    frame.setVisible(true); //To ensure all the components are loaded first before making the game visible
 
 
     }
